@@ -1,51 +1,93 @@
+// Importação de bibliotecas
 import "dart:io";
 
-// Variáveis globais
-var a?;
+// Declaração de variáveis (globais)
+var a;
+var b;
+double? soma;
+double? subtracao;
+double? produto;
+double? divisao;
+double? restoDivisao;
+int? divInteira;
 
 void main() {
+  print("~"*30);
+  print("Calculadora Automática");
+  print("~"*30);
+  
+  // Looping do programa
   while (true) {
+    // Entrada de dados
+    stdout.write("Entre com valor de A: ");
+    a = stdin.readLineSync()!;
     print("~"*30);
-    print("Calculadora Automática");
-    print("~"*30);
-    print("");
 
-    try {
-      stdout.write("Entre com valor de A: ");
-      a = stdin.readLineSync()!;
-      a = int.parse(a);
-      print("Valor válido");
-      print(a);
-    } catch (e) {
-      print("Valor inválido");
+    // Validação de número
+    if (a != null && a.isNotEmpty) {
+      if (double.tryParse(a) != null) {
+        a = double.tryParse(a);
+      } else {
+        print("Por favor digite um número!");
+        print("~"*30);
+        continue;
+      }
+    } else {
+      print("Por favor digite algo!");
+      print("~"*30);
+      continue;
     }
 
-    // stdout.write("Entre com o valor de B: ");
-    // var b = stdin.readLineSync();
+    // Looping da segunda entrada
+    while (true) {
+      stdout.write("Entre com o valor de B: ");
+      b = stdin.readLineSync();
+      print("~"*30);
 
-    // if (int())
+      // Validação de número
+      if (b != null && b.isNotEmpty) {
+        if (double.tryParse(b) != null) {
+          b = double.tryParse(b);
+          break;
+        } else {
+          print("Por favor digite um número!");
+          print("~"*30);
+          continue;
+        }
+      } else {
+        print("Por favor digite algo!");
+        print("~"*30);
+        continue;
+      }
+    }
 
-    // // Operador de soma
-    // int soma = a + b;
-    // // Operador de subtração
-    // int subtracao = a - b;
-    // // Operador de produto
-    // int produto = a * b;
-    // // Operador de divisão
-    // double divisao = a / b;
-    // // Operador de divisão inteira
-    // int divInteira = a ~/ b;
-    // // Operadkr de resto da divisão
-    // int restoDivisao = a % b;
+    // Cálculos
+    soma = a + b;
 
-    // print("-" * 70);
-    // print("A soma de $a + $b = $soma");
-    // print("A multiplicação de $a × $b = $produto");
-    // print("A subtração de $a - $b = $subtracao");
-    // print("A divisão de $a ÷ $b = ${divisao.toStringAsFixed(2)}");
-    // print("O resto da divisão de $a % $b = $restoDivisao");
-    // print("A divisão inteira de $a ~/ $b = $divInteira");
-    // print("-" * 70);
+    subtracao = a - b;
+
+    produto = a * b;
+    
+    if (b != 0) {
+      divisao = a / b;
+
+      divInteira = a ~/ b;
+
+      restoDivisao = a % b;
+    }
+
+    print("~"*30);
+    print("A soma de $a + $b = $soma");
+    print("A subtração de $a - $b = $subtracao");
+    print("A multiplicação de $a × $b = $produto");
+    if (b != 0) {
+      print("A divisão de $a ÷ $b = ${divisao!.toStringAsFixed(4)}");
+      print("O resto da divisão de $a % $b = $restoDivisao");
+      print("A divisão inteira de $a ~/ $b = $divInteira");
+    } else {
+      print("ERRO: Divisão por zero não permitida!");
+    }
+    print("~"*30);
     break;
   }
 }
