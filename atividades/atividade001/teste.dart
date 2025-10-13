@@ -1,18 +1,27 @@
 import "dart:io";
 
-String teste = "";
+var teste;
 
 void main() {
+  while (true) {
+    stdout.write("Escreva: ");
+    teste = stdin.readLineSync()!;
+    print("");
 
-  stdout.write("Escreva: ");
-  teste = stdin.readLineSync()!;
-
-  try {
-    int.parse(teste);
-    print("Valor válido");
-  } catch (e) {
-    print("Valor inválido");
+    if (int.tryParse(teste) != null) {
+      teste = int.tryParse(teste);
+      print("Valor: ${teste}\nTipo ${teste.runtimeType}");
+      print("Tipo escolhido!");
+      print("");
+      break;
+    } else {
+      print("Valor: ${teste}\nTipo ${teste.runtimeType}");
+      print("Outro tipo!");
+      print("");
+      continue;
+    }
   }
 }
 
-// Testar tryParse
+// tryParse funciona para validações de tipo :0
+// Exemplo de uso validando tipo int
