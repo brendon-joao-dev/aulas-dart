@@ -16,14 +16,14 @@ void main () {
       print("O seu antecessor é ${numero - 1}");
       print("~"*30);
       
-      stdout.write("Deseja digitar outro número? (s/n) ");
+      stdout.write("Pressione enter para outro número ou 0 para sair: ");
       String continuar = stdin.readLineSync()!;
       print("~"*30);
 
-      if (continuar == "s" || continuar == "S") {
-        continue;
-      } else {
+      if (continuar == "0") {
         break;
+      } else {
+        continue;
       }
     } else {
       print("Por favor digite um número inteiro!");
