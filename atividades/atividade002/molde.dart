@@ -6,7 +6,7 @@ void main () {
   String? continuar;
   String validador;
 
-  // Início do looping do sistema
+  // -------------- looping do sistema --------------
   while (true) {
     // Entrada da opção para o usuário continuar o programa
     stdout.write("Deseja rodar o programa novamente? (s/n)");
@@ -27,6 +27,39 @@ void main () {
       }
     } else {
       break; // Sai do programa se o usuário não digitar nada
+    }
+  }
+
+  // -------------- Entrada de int --------------
+  int? numero;
+
+  while(true) {
+    stdout.write("Digite um número: ");
+    String entrada = stdin.readLineSync()!;
+    numero = int.tryParse(entrada.replaceAll(" ", ""));
+    if (numero == null || numero.isNegative) {
+      print("Por favor digite um número válido");
+      print("|~~~~~|"*7);
+      continue;
+    } else {
+      break;
+    }
+  }
+
+
+  // -------------- Entrada de double --------------
+  double? numeroDois;
+
+  while (true) {
+    stdout.write("Digite um double: ");
+    String entrada = stdin.readLineSync()!;
+    numeroDois = double.tryParse(entrada.replaceAll(", ", ".").replaceAll(" ", ""));
+    if (numeroDois == null || numeroDois.isNegative) {
+      print("Por favor digite um número válido");
+      print("|~~~~~|"*7);
+      continue;
+    } else {
+      break;
     }
   }
 }
