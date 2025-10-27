@@ -1,34 +1,37 @@
-// B - Fatorial com repetição: Faça um programa que leia um número inteiro positivo e calcule seu fatorial usando um loop.
+// C - Soma dos múltiplos: Faça um programa que receba um número inteiro N e calcule a soma de todos os múltiplos de 3 ou 5 menores que N.
 
 // Importação da biblioteca "dart:io"
 import "dart:io";
 
 void main() {
   // Declaração de variáveis
-  String validador;
   String? continuar;
+  String validador;
   int? numero;
-  int fatorial = 0;
 
   print("|~~~~~|" * 7);
   print("");
-  print("Calculadora de Fatorial");
+  print("Soma dos Multiplos de 3 ou 5");
   print("");
   print("|~~~~~|" * 7);
   print("");
 
   // -------------- looping do sistema --------------
   while (true) {
+    String multiTres = "";
+    String multiCinco = "";
+    int somaTres = 0;
+    int somaCinco = 0;
     // -------------- Looping de entrada --------------
     while (true) {
-      stdout.write("Digite um número inteiro positivo: ");
+      stdout.write("Digite um número: ");
       String entrada = stdin.readLineSync()!;
       print("");
       print("|~~~~~|" * 7);
       print("");
       numero = int.tryParse(entrada.replaceAll(" ", ""));
       if (numero == null || numero.isNegative) {
-        print("Por favor digite um número inteiro positivo!");
+        print("Por favor digite um número válido");
         print("");
         print("|~~~~~|" * 7);
         print("");
@@ -39,18 +42,31 @@ void main() {
       }
     }
 
-    fatorial = numero;
-    for (int i = 1; i < numero; i++) {
-      fatorial *= i;
+    for (int i = numero; i > 0; i--) {
+      if (i % 3 == 0) {
+        multiTres += "$i, ";
+        somaTres += i;
+      } else if (i % 5 == 0) {
+        multiCinco += "$i, ";
+        somaCinco += i;
+      } else {
+        continue;
+      }
     }
 
-    print("A fatorial de $numero é $fatorial");
+    print("De acordo com o número: $numero");
+    print("");
+    print("Os multiplos de 3 são: $multiTres");
+    print("A soma dos multiplos de 3 é: $somaTres");
+    print("");
+    print("Os multiplos de 5 são: $multiCinco");
+    print("A soma dos multiplos de 5 é: $somaCinco");
     print("");
     print("|~~~~~|" * 7);
     print("");
 
     // Entrada da opção para o usuário continuar o programa
-    stdout.write("Deseja calcular a fatorial de outro número? (s/n)");
+    stdout.write("Deseja somar outros multiplos? (s/n)");
     continuar = stdin.readLineSync();
     print("");
     print("|~~~~~|" * 7);
