@@ -1,7 +1,7 @@
 // Importação da biblioteca "dart:io"
 import "dart:io";
 
-void main () {
+void main() {
   // Declaração de variáveis
   String? continuar;
   String validador;
@@ -11,12 +11,18 @@ void main () {
     // Entrada da opção para o usuário continuar o programa
     stdout.write("Deseja rodar o programa novamente? (s/n)");
     continuar = stdin.readLineSync();
-    print("|~~~~~|"*7);
+    print("");
+    print("|~~~~~|" * 7);
+    print("");
 
     // Verifica se a variável "continuar" não é nula
     if (continuar != null) {
-      validador = continuar.replaceAll(" ", ""); // Remove todos os espaços vazios da string
-      validador = validador.toLowerCase(); // Converte a string para letras minúsculas
+      validador = continuar.replaceAll(
+        " ",
+        "",
+      ); // Remove todos os espaços vazios da string
+      validador = validador
+          .toLowerCase(); // Converte a string para letras minúsculas
       continuar = validador; // Devolve o valor validado a variável original
 
       // Verifica se a variável "continuar" (validada) é igual a "s"
@@ -33,19 +39,24 @@ void main () {
   // -------------- Entrada de int --------------
   int? numero;
 
-  while(true) {
+  while (true) {
     stdout.write("Digite um número: ");
     String entrada = stdin.readLineSync()!;
+    print("");
+    print("|~~~~~|" * 7);
+    print("");
     numero = int.tryParse(entrada.replaceAll(" ", ""));
     if (numero == null || numero.isNegative) {
       print("Por favor digite um número válido");
-      print("|~~~~~|"*7);
+      print("");
+      print("|~~~~~|" * 7);
+      print("");
       continue;
     } else {
+      print("");
       break;
     }
   }
-
 
   // -------------- Entrada de double --------------
   double? numeroDois;
@@ -53,12 +64,20 @@ void main () {
   while (true) {
     stdout.write("Digite um double: ");
     String entrada = stdin.readLineSync()!;
-    numeroDois = double.tryParse(entrada.replaceAll(", ", ".").replaceAll(" ", ""));
+    print("");
+    print("|~~~~~|" * 7);
+    print("");
+    numeroDois = double.tryParse(
+      entrada.replaceAll(", ", ".").replaceAll(" ", ""),
+    );
     if (numeroDois == null || numeroDois.isNegative) {
       print("Por favor digite um número válido");
-      print("|~~~~~|"*7);
+      print("");
+      print("|~~~~~|" * 7);
+      print("");
       continue;
     } else {
+      print("");
       break;
     }
   }
