@@ -1,114 +1,81 @@
-// A - Números primos no intervalo: Faça um programa que receba dois números inteiros A e B e imprima todos os números primos entre A e B (inclusive).
+/**
+ * Faça um programa que receba dois números inteiros A e B e 
+ * imprima todos os números primos entre A e B.
+ */
 
-// Importação da biblioteca "dart:io"
-import "dart:io";
+import 'dart:io';
 
-void main () {
-  // Título estático (Só aparece uma vez)
-  print("|~~~~~|"*7);
-  print("Números Primos entre A e B");
-  print("|~~~~~|"*7);
-
-  // Declaração de variáveis
-  String? continuar;
-  String? entradaA;
-  String? entradaB;
-  int inicio;
-  int fim;
-  String validador;
-  String? resultado;
-
-  // Início do looping do sistema
+void main() {
   while (true) {
-    // Looping do valor de início do intervalo
-    while (true) {
-      stdout.write("Digite o valor de início do intervalo: ");
-      entradaA = stdin.readLineSync();
-      print("|~~~~~|*7");
+    String resultado = ""; // guarda os números primos encontrados
 
-      // Verifica se a variável "entradaA" é diferente de null
-      if (entradaA != null) {
-        validador = entradaA.replaceAll(" ", ""); // Remove todos os espaços vazios da string
-
-        // Verifica se a variável "validador" ao tentar ser convertida para o tipo int retorna algo diferente de nulo
-        if (int.tryParse(validador) != null) {
-          inicio = int.parse(validador); // Converte o valor validado de "entradaA" que está em "validador" para o tipo inteiro, e salva na variável inicio
-          break; // Quebra  looping do valor de início
-        } else {
-          print("Por favor digite um número inteiro!");
-          print("|~~~~~|*7");
-          continue; // Continua o looping do valor de início
-        }
-      } else {
-        print("Por favor digite algo!");
-        print("|~~~~~|*7");
-        continue; // Continua o looping do valor de início
-      }
+    stdout.write("Digite o valor do inicio: ");
+    String entrada1 = stdin.readLineSync()!; // entrada do 1º numero
+    int? inicio = int.tryParse(
+      entrada1.replaceAll(" ", ""),
+    ); // retira qulquer espaço na entrada
+    print("~" * 20);
+    // valida a entrada
+    if (inicio == null || inicio.isNegative) {
+      print("");
+      print("Valor inválida! Digite um número inteiro e positivo");
+      print("~°" * 20);
+      continue; // volta para o início do loop
     }
-    // OBS: O valor de início assim como as outras são feitas em loopings independentes e não no principal
-    // pois dessa forma é possível validar e se necessário repetir, cada entrada individualmente
-
-    // Looping do valor de fim do intervalor
-    while (true) {
-      stdout.write("Digite o valor final do intervalo: ");
-      entradaB = stdin.readLineSync();
-      print("|~~~~~|*7");
-
-      if (entradaB != null) {
-        validador = entradaB.replaceAll(" ", "");
-
-        if (int.tryParse(validador) != null) {
-          fim = int.parse(validador);
-          break;
-        } else {
-          print("Por favor digite um número inteiro!");
-          print("|~~~~~|*7");
-          continue;
-        }
-      } else {
-        print("Por favor digite algo!");
-        print("|~~~~~|*7");
-        continue;
-      }
+    stdout.write("Digite o valor do inicio: ");
+    String entrada2 = stdin.readLineSync()!; // entrada do 1º numero
+    int? fim = int.tryParse(
+      entrada2.replaceAll(" ", ""),
+    ); // retira qulquer espaço na entrada
+    print("~" * 20);
+    // valida a entrada
+    if (fim == null || fim.isNegative) {
+      print("");
+      print("Valor inválida! Digite um número inteiro e positivo");
+      print("~°" * 20);
+      continue; // volta para o início do loop
     }
 
-    // Prossegui para o processamento após o início e fim do intervalo serem definidos
-    // for c in range(2,100):
-    // for m in range(2,c):
-    //     if c % m == 0:
-    //         break
-    // else:
-    //     print('----')
-    //     print(c)
     for (int i = inicio; i <= fim; i++) {
-      for (int j = inicio; j <= i; j++) {
+      if (i < 2) continue; // 0 e 1 não são primos
+
+      bool primo = true; // assume que é primo até provar o contrário
+
+      // verifica se existe algum divisor além de 1 e dele mesmo
+      for (int j = 2; j <= i ~/ 2; j++) {
         if (i % j == 0) {
-          break;
-        } else {
-          resultado += "$i ";
+          primo = false;
+          break; // achou divisor = não é primo
         }
-      } 
+      }
+
+      if (primo) {
+        resultado += "$i, ";
+      }
     }
 
-    // Entrada da opção para o usuário continuar o programa
-    stdout.write("Deseja ver outro intervalo de primos? (s/n)");
-    continuar = stdin.readLineSync();
-    print("|~~~~~|"*7);
-
-    // Verifica se a variável "continuar" não é nula
-    if (continuar != null) {
-      validador = continuar.replaceAll(" ", ""); // Remove todos os espaços vazios da string
-      validador = validador.toLowerCase(); // Converte a string para letras minúsculas
-      continuar = validador; // Devolve o valor validado a variável original
-
-      // Verifica se a variável "continuar" (validada) é igual a "s"
-      if (continuar == "s") {
-        continue; // Reinicia o programa
-      } else {
-        break; // Sai do programa
-      }
+    print("~" * 20);
+    if (resultado.isEmpty) {
+      print("Não há números primos entre $inicio e $fim.");
     } else {
-      break; // Sai do programa se o usuário não digitar nada
+      print("Os números primos entre $inicio e $fim são:");
+      print(
+        resultado.substring(0, resultado.length - 2),
+      ); // remove vírgula final
+    }
+    print("~" * 20);
+
+    print("");
+    print("~°" * 20);
+    stdout.write("Deseja realizar outro cálculo? (s/n): ");
+    String resposta = stdin.readLineSync()!.trim().toLowerCase();
+    print("~" * 20);
+
+    if (resposta == 'n') {
+      print("");
+      print("Obrigado por usar! Encerrando o programa...");
+      print("~°" * 20);
+      break;
     }
   }
 }
