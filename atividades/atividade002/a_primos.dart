@@ -1,39 +1,55 @@
-/**
- * Faça um programa que receba dois números inteiros A e B e 
- * imprima todos os números primos entre A e B.
- */
+// A - Números primos no intervalo: Faça um programa que receba dois números inteiros A e B e imprima todos os números primos entre A e B (inclusive).
 
+// Importação da biblioteca "dart:io"
 import 'dart:io';
 
 void main() {
+  print("|~~~~~|" * 7);
+  print("");
+  print("Intervalo de primos");
+  print("");
+  print("|~~~~~|" * 7);
+  print("");
+
   while (true) {
     String resultado = ""; // guarda os números primos encontrados
+    int? inicio;
+    int? fim;
 
-    stdout.write("Digite o valor do inicio: ");
-    String entrada1 = stdin.readLineSync()!; // entrada do 1º numero
-    int? inicio = int.tryParse(
-      entrada1.replaceAll(" ", ""),
-    ); // retira qulquer espaço na entrada
-    print("~" * 20);
-    // valida a entrada
-    if (inicio == null || inicio.isNegative) {
+    while (true) {
+      stdout.write("Digite o número de início do intervalo: ");
+      String entrada = stdin.readLineSync()!;
       print("");
-      print("Valor inválida! Digite um número inteiro e positivo");
-      print("~°" * 20);
-      continue; // volta para o início do loop
+      print("|~~~~~|" * 7);
+      inicio = int.tryParse(entrada.replaceAll(" ", ""));
+      if (inicio == null || inicio.isNegative) {
+        print("Por favor digite um número inteiro positivo!");
+        print("");
+        print("|~~~~~|" * 7);
+        print("");
+        continue;
+      } else {
+        print("");
+        break;
+      }
     }
-    stdout.write("Digite o valor do inicio: ");
-    String entrada2 = stdin.readLineSync()!; // entrada do 1º numero
-    int? fim = int.tryParse(
-      entrada2.replaceAll(" ", ""),
-    ); // retira qulquer espaço na entrada
-    print("~" * 20);
-    // valida a entrada
-    if (fim == null || fim.isNegative) {
+
+    while (true) {
+      stdout.write("Digite o número de fim do intervalo: ");
+      String entrada = stdin.readLineSync()!;
       print("");
-      print("Valor inválida! Digite um número inteiro e positivo");
-      print("~°" * 20);
-      continue; // volta para o início do loop
+      print("|~~~~~|" * 7);
+      fim = int.tryParse(entrada.replaceAll(" ", ""));
+      if (fim == null || fim.isNegative) {
+        print("Por favor digite um número válido");
+        print("");
+        print("|~~~~~|" * 7);
+        print("");
+        continue;
+      } else {
+        print("");
+        break;
+      }
     }
 
     for (int i = inicio; i <= fim; i++) {
@@ -54,7 +70,6 @@ void main() {
       }
     }
 
-    print("~" * 20);
     if (resultado.isEmpty) {
       print("Não há números primos entre $inicio e $fim.");
     } else {
@@ -63,18 +78,20 @@ void main() {
         resultado.substring(0, resultado.length - 2),
       ); // remove vírgula final
     }
-    print("~" * 20);
+    print("");
+    print("|~~~~~|" * 7);
 
     print("");
-    print("~°" * 20);
     stdout.write("Deseja realizar outro cálculo? (s/n): ");
     String resposta = stdin.readLineSync()!.trim().toLowerCase();
-    print("~" * 20);
+    print("");
+    print("|~~~~~|" * 7);
+    print("");
 
     if (resposta == 'n') {
-      print("");
       print("Obrigado por usar! Encerrando o programa...");
-      print("~°" * 20);
+      print("");
+      print("|~~~~~|" * 7);
       break;
     }
   }

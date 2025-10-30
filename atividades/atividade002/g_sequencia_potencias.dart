@@ -19,7 +19,6 @@ void main() {
       String entrada = stdin.readLineSync()!;
       print("");
       print("|~~~~~|" * 7);
-      print("");
       numero = int.tryParse(entrada.replaceAll(" ", ""));
       if (numero == null || numero.isNegative) {
         print("Por favor digite uma potência inteira e positiva!");
@@ -49,13 +48,10 @@ void main() {
     print("");
 
     if (resposta == 'n') {
-
-      print("Obrigado por usar! Encerrando o programa... ");
+      print("Obrigado por usar! Encerrando o programa...");
       print("");
       print("|~~~~~|" * 7);
       break;
-    } else {
-      continue;
     }
   }
 }
