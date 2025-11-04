@@ -16,8 +16,6 @@ void main() {
   // Declaração de variáveis
   String entrada;
   String continuar;
-  int? inicio;
-  int? fim;
   int soma;
   List<int> intervalo;
   List<int> intervalo_filtrado;
@@ -33,35 +31,17 @@ void main() {
     print("<+++++>" * 7);
     print("");
     while (true) {
-      // Mensagem da entrada
-      stdout.write("Digite o início do intervalo: ");
-      // Entrada sendo salva em uma variável
+      stdout.write("Digite uma sequencia de números separados por espaço: ");
       entrada = stdin.readLineSync()!;
       print("");
-      // Casting - Convertendo o tipo de entrada e salvando em outra variável
-      inicio = int.tryParse(entrada.replaceAll(", ", ".").replaceAll(" ", ""));
 
-      // Verificando se a entrada segui o padrão desejado - Um número inteiro positivo
-      if (inicio == null || inicio.isNegative) {
-        // Mensagem de erro pro usuário
-        print("Por favor digite um início inteiro positivo!");
-        print("");
-        // Repete a entrada
-        continue;
-      } else {
-        // Quebra o looping da entrada e continua o programa
-        break;
-      }
-    }
+      List<String> partes = entrada.split(" ");
 
-    while (true) {
-      stdout.write("Digite o fim do intervalo: ");
-      entrada = stdin.readLineSync()!;
-      print("");
-      fim = int.tryParse(entrada.replaceAll(", ", ".").replaceAll(" ", ""));
-      if (fim == null || fim.isNegative) {
-        print("Por favor digite um fim inteiro positivo!");
-        print("");
+      intervalo = partes.map((p) => int.tryParse(p) ?? 0).toList();
+
+      if (intervalo.isEmpty) {
+        print("Por favor digite um número válido");
+        print(" ");
         continue;
       } else {
         break;
@@ -71,12 +51,9 @@ void main() {
     print("");
 
     // <======= PROCESSAMENTO =======>
-    // Gera o intervalo de número do inicio ao fim que o usuário inseriu (ambos inclusive)
-    for (int i = inicio; i <= fim; i++) {
-      intervalo.add(i);
-    }
-
     // Filtra os números pares maiores que 10
+    // Percorre cada valor do intervalo e verifica se ele é par e maior que 10
+    // Salva esse resultado em intervalo_filtrado
     intervalo_filtrado = intervalo
         .where((numero) => numero % 2 == 0 && numero > 10)
         .toList();
@@ -84,6 +61,8 @@ void main() {
     // try... catch para operação que pode dar erro
     try {
       // Pode dar erro se nenhum número tiver passado no filtro
+      // List.reduce: Reduz todos os elementos da lista a um só - A função passada como argumento indica como agrupar os elementos
+      // (soma, numero): soma - variável acumuladora, numero - cada elemento
       soma = intervalo_filtrado.reduce((soma, numero) => soma + numero);
     } catch (e) {
       // Mensagem de erro pro usuário
