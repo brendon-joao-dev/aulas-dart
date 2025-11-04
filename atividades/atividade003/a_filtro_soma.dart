@@ -18,22 +18,20 @@ void main() {
   String continuar;
   int? inicio;
   int? fim;
-  int soma = 0;
-  List<int> intervalo = [];
-  List<int> intervalo_filtrado = [];
+  int soma;
+  List<int> intervalo;
+  List<int> intervalo_filtrado;
 
   // Looping para permitir repetição do programa
   while (true) {
-    print("<+++++>" * 7);
-    print("");
-
     // Limpeza de variáveis - reinicia as variáveis, caso o programa já tenha rodado mais de uma ves
     soma = 0;
     intervalo = [];
     intervalo_filtrado = [];
 
-    
     // <+++++++ ENTRADA DE DADOS +++++++>
+    print("<+++++>" * 7);
+    print("");
     while (true) {
       // Mensagem da entrada
       stdout.write("Digite o início do intervalo: ");
@@ -89,7 +87,9 @@ void main() {
       soma = intervalo_filtrado.reduce((soma, numero) => soma + numero);
     } catch (e) {
       // Mensagem de erro pro usuário
-      print("Intervalo fora do alcance, o intervalo deve conter valores maiores que 10!");
+      print(
+        "Intervalo fora do alcance, o intervalo deve conter valores maiores que 10!",
+      );
       print("");
     }
 
@@ -109,14 +109,17 @@ void main() {
     print("<----->" * 7);
     print("");
 
+    // Permitir repetição
     stdout.write("Deseja repetir o programa? (s/n) ");
     continuar = stdin.readLineSync()!.toLowerCase().replaceAll(" ", "");
     print("");
 
     print("<=====>" * 7);
     if (continuar == "s") {
-      continue;
+      // Reinicia o programa
+      continue; 
     } else {
+      // Saí do programa
       break;
     }
   }
