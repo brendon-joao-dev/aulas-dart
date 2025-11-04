@@ -12,7 +12,6 @@ void main() {
   print("");
 
   // Declaração de variáveis
-  String entrada;
   String continuar;
 
   // Looping para permitir repetição do programa
