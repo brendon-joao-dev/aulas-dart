@@ -17,6 +17,7 @@ void main() {
   String entrada;
   String continuar;
   int soma;
+  List<String> entradas;
   List<int> intervalo;
   List<int> intervalo_filtrado;
 
@@ -35,12 +36,14 @@ void main() {
       entrada = stdin.readLineSync()!;
       print("");
 
-      List<String> partes = entrada.split(" ");
+      // Divide a entrada a cada espaço
+      entradas = entrada.split(" ");
 
-      intervalo = partes.map((p) => int.tryParse(p) ?? 0).toList();
+      // Transforma cada entrada em inteiro ou substitui por zero
+      intervalo = entradas.map((p) => int.tryParse(p) ?? 0).toList();
 
       if (intervalo.isEmpty) {
-        print("Por favor digite um número válido");
+        print("Por favor digite números válidos!");
         print(" ");
         continue;
       } else {
