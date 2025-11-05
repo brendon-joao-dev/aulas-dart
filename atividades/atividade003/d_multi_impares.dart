@@ -74,7 +74,7 @@ void main() {
     // <------- SAÍDA DE DADOS ------->
     print("<----->" * 7);
     print("");
-    print("O intervalo original era: ");
+    print("O intervalo original é: ");
     intervalo.forEach((elemento) => stdout.write("$elemento, "));
     print("");
     print("");
