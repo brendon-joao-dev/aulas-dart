@@ -19,6 +19,10 @@ void main() {
   String entrada;
   List<String> entradas;
   List<int> intervalo;
+  List<int> intervalo_impares;
+  List<int> intervalo_pares;
+  List<int> intervalo_final = [];
+  List<int> dobrados;
 
   // Looping para permitir repetição do programa
   while (true) {
@@ -46,11 +50,46 @@ void main() {
     print("");
 
     // <======= PROCESSAMENTO =======>
+    // Filtra os números ímpares
+    intervalo_impares = intervalo.where((numero) => numero % 2 != 0).toList();
+    
+    // Dobra os números ímpares
+    dobrados = intervalo_impares.map((numero) => numero * 2).toList();
+
+    // Filtra os números pares
+    intervalo_pares = intervalo.where((numero) => numero % 2 == 0).toList();
+
+    // Limpa a lista intervalo_final, se o programa já tiver rodado uma vez garante q cada iteração não deixe resultados
+    intervalo_final.clear();
+
+    // Adiciona a lista final os números dobrados
+    intervalo_final.addAll(dobrados);
+
+    // Adiciona a lista final os números pares 
+    intervalo_final.addAll(intervalo_pares);
+
+    // Ordena a lista final
+    intervalo_final.sort();
 
     // <------- SAÍDA DE DADOS ------->
     print("<----->" * 7);
     print("");
-
+    print("O intervalo original era: ");
+    intervalo.forEach((elemento) => stdout.write("$elemento, "));
+    print("");
+    print("");
+    print("O intervalo de ímpares é: ");
+    intervalo_impares.forEach((elemento) => stdout.write("$elemento, "));
+    print("");
+    print("");
+    print("Os ímpares dobrados são: ");
+    dobrados.forEach((elemento) => stdout.write("$elemento, "));
+    print("");
+    print("");
+    print("A lista final fica assim: ");
+    intervalo_final.forEach((elemento) => stdout.write("$elemento, "));
+    print(""); 
+    print(""); 
     print("<----->" * 7);
     print("");
 
