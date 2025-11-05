@@ -13,8 +13,7 @@ void main() {
 
   String entrada;
   String continuar;
-  int? inicio;
-  int? fim;
+  List<String> entradas;
   List<int> intervalo;
   Set<int> intervalo_sem_duplicatas;
   List<int> intervalo_unicos;
@@ -29,26 +28,16 @@ void main() {
     print("<+++++>" * 7);
     print("");
     while (true) {
-      stdout.write("Digite o início do intervalo: ");
+      stdout.write("Digite uma sequencia de números separados por espaço: ");
       entrada = stdin.readLineSync()!;
       print("");
-      inicio = int.tryParse(entrada.replaceAll(", ", ".").replaceAll(" ", ""));
-      if (inicio == null || inicio.isNegative) {
-        print("Por favor digite um início inteiro positivo!");
-        print("");
-        continue;
-      } else {
-        break;
-      }
-    }
 
-    while (true) {
-      stdout.write("Digite o fim do intervalo: ");
-      entrada = stdin.readLineSync()!;
-      print("");
-      fim = int.tryParse(entrada.replaceAll(", ", ".").replaceAll(" ", ""));
-      if (fim == null || fim.isNegative) {
-        print("Por favor digite um fim inteiro positivo!");
+      entradas = entrada.split(" ");
+
+      intervalo = entradas.map((entrada) => int.tryParse(entrada) ?? 0).toList();
+
+      if (intervalo.isEmpty) {
+        print("Por favo digite números válidos!");
         print("");
         continue;
       } else {
@@ -59,22 +48,43 @@ void main() {
     print("");
 
     // <======= PROCESSAMENTO =======>
+    // Copia o intervalo para um Set que não permite duplicatas
+    intervalo_sem_duplicatas = intervalo.toSet();
+
+    // Copia intervalo_sem_duplicatas de volta para uma lista
+    intervalo_unicos = intervalo_sem_duplicatas.toList();
+
+    // Ordena a lista de valores únicos
+    intervalo_unicos.sort();
 
     // <------- SAÍDA DE DADOS ------->
+    print("<----->" * 7);
+    print("");
+    print("O intervalo original é: ");
+    intervalo.forEach((elemento) => stdout.write("$elemento, "));
+    print("");
+    print("");
+    print("O intervalo de número únicos é: ");
+    intervalo_unicos.forEach((elemento) => stdout.write("$elemento, "));
+    print("");
+    print("");
+    print("O intervalo contém ${intervalo_unicos.length} elementos únicos");
+    print("");
+    print("<----->" * 7);
+    print("");
+  
+    // Permitir repetição
     stdout.write("Deseja repetir o programa? (s/n) ");
     continuar = stdin.readLineSync()!.toLowerCase().replaceAll(" ", "");
     print("");
 
     print("<=====>" * 7);
     if (continuar == "s") {
-      continue;
+      // Reinicia o programa
+      continue; 
     } else {
+      // Saí do programa
       break;
     }
   }
-
-  print("<+++++>" * 7);
-  print("<----->" * 7);
-  print("<----->" * 7);
-  print("<=====>" * 7);
 }
