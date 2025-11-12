@@ -31,6 +31,7 @@ void main() {
 
     stdout.write("Digite o número da opção desejada: ");
     int? opcao = int.tryParse(stdin.readLineSync() ?? "");
+    print("");
     print("=" * 70);
     print("");
 
@@ -195,20 +196,20 @@ void main() {
             break;
           }
         }
+      } else if (opcao == 2) {
+        print("Visualização de produtos");
+        print("");
+        print("=" * 70);
+        print("");
+        carrinho.forEach((nome, informacoes) {
+          print(
+            "Produto: $nome\tpreço: ${informacoes["preco"]}\tquantidade: ${informacoes["quantidade"]}\tsubtotal: ${informacoes["subtotal"]}",
+          );
+          print("");
+          print("-" * 70);
+          print("");
+        });
       }
-    } else if (opcao == 2) {
-      print("Visualização de produtos");
-      print("");
-      print("=" * 70);
-      print("");
-      carrinho.forEach((nome, informacoes) {
-        print("-"*70);
-        print("");
-        print("Produto: $nome\tpreço: ${informacoes["preco"]}\tquantidade: ${informacoes["quantidade"]}\tsubtotal: ${informacoes["subtotal"]}");
-        print("");
-        print("-"*70);
-        print("");
-      });
     } else {
       print("Por favor digite um valor válido como opção!");
       stdout.write("Pressione enter para continuar...");
