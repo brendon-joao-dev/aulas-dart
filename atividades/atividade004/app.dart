@@ -196,6 +196,19 @@ void main() {
           }
         }
       }
+    } else if (opcao == 2) {
+      print("Visualização de produtos");
+      print("");
+      print("=" * 70);
+      print("");
+      carrinho.forEach((nome, informacoes) {
+        print("-"*70);
+        print("");
+        print("Produto: $nome\tpreço: ${informacoes["preco"]}\tquantidade: ${informacoes["quantidade"]}\tsubtotal: ${informacoes["subtotal"]}");
+        print("");
+        print("-"*70);
+        print("");
+      });
     } else {
       print("Por favor digite um valor válido como opção!");
       stdout.write("Pressione enter para continuar...");
