@@ -2,13 +2,13 @@
 import "dart:io";
 
 // Estrutura de dados:
-// - Map: carrinho
-//    - "nome": Map - nome do produto
+// - List: carrinho
 //      - Map: informações do produto
+//        - "nome": String - nome do produto
 //        - "preco": double - preço unitário daquele produto
 //        - "quantidade": int - quantidade daquele produto
 //        - "subtotal": double - subtotal atual daquele produto
-Map<String, Map<String, dynamic>> carrinho = {};
+List<Map<String, dynamic>> carrinho = [];
 
 // Função principal do sistema:
 void main() {
@@ -158,15 +158,20 @@ void main() {
 
           // Estruturação do produto:
           Map<String, dynamic> produto = {
+            "nome": nome,
             "preco": preco,
             "quantidade": quantidade,
             "subtotal": subtotal,
           };
 
           // Verifica se o carrinho NÃO possui o produto que está sendo adicionado:
-          if (!carrinho.containsKey(nome)) {
+          if (carrinho
+                  .where((produto) => produto["nome"] == nome)
+                  .toList()
+                  .length ==
+              0) {
             // Adiciona o produto ao carrinho:
-            carrinho[nome] = produto;
+            carrinho.add(produto);
 
             print("Produto $nome adicionado com sucesso!");
             print("");
@@ -200,15 +205,160 @@ void main() {
         print("Visualização de produtos");
         print("");
         print("=" * 70);
+
+        // Validação caso não tenha nenhum produto
+        if (carrinho.length != 0) {
+          int i = 0;
+          carrinho.forEach((produto) {
+            print("");
+            print(
+              "ID: ${i + 1} Produto: ${produto["nome"]} Preço: ${produto["preco"]} Quantidade: ${produto["quantidade"]} Subtotal: ${produto["subtotal"]}",
+            );
+            print("");
+            print("-" * 70);
+            i++;
+          });
+
+          print("");
+          stdout.write("Pressione enter para continuar...");
+          stdin.readLineSync();
+          print("");
+          print("=" * 70);
+          print("");
+          continue;
+        } else {
+          print("");
+          print("Nenhum produto no carrinho!");
+          stdout.write("Pressione enter para continuar...");
+          stdin.readLineSync();
+          print("");
+          continue;
+        }
+      } else if (opcao == 3) {
+        print("Modificação de produtos");
         print("");
-        carrinho.forEach((nome, informacoes) {
-          print(
-            "Produto: $nome\tpreço: ${informacoes["preco"]}\tquantidade: ${informacoes["quantidade"]}\tsubtotal: ${informacoes["subtotal"]}",
+        print("=" * 70);
+
+        int? id = 0;
+        int? nova_quantidade = 0;
+        Map<String, dynamic> produto_alterando;
+
+        // Looping de entrada do ID:
+        while (true) {
+          // Exibindo produtos do carrinho pro usuário escolher qual alterar:
+          if (carrinho.length != 0) {
+            int i = 0;
+            carrinho.forEach((produto) {
+              print("");
+              print(
+                "ID: ${i + 1} Produto: ${produto["nome"]} Preço: ${produto["preco"]} Quantidade: ${produto["quantidade"]} Subtotal: ${produto["subtotal"]}",
+              );
+              print("");
+              print("=" * 70);
+              print("");
+              i++;
+            });
+          } else {
+            print("");
+            print("Nenhum produto no carrinho!");
+            print("");
+          }
+
+          // Entrada em si:
+          stdout.write("Digite o ID do produto que quer alterar: ");
+          id = int.tryParse(stdin.readLineSync() ?? "");
+          print("");
+          print("=" * 70);
+          print("");
+
+          // Validação de valores inválidos (Strings):
+          if (id == null) {
+            print("Por favor digite um número inteiro como ID!");
+            stdout.write("Pressione enter para continuar...");
+            stdin.readLineSync();
+            print("");
+            print("=" * 70);
+            print("");
+            continue;
+          }
+
+          // Validação de valores negativos e zero:
+          if (id == 0 || id.isNegative) {
+            print("Por favor digite um ID positivo diferente de zero!");
+            stdout.write("Pressione enter para continuar...");
+            stdin.readLineSync();
+            print("");
+            print("=" * 70);
+            print("");
+            continue;
+          }
+
+          // Validação de IDs fora do intervalo de produtos do carrinho:
+          if (id > carrinho.length + 1) {
+            print("Por favor digite um ID dentro do intervalo dos produtos!");
+            stdout.write("Pressione enter para continuar...");
+            stdin.readLineSync();
+            print("");
+            print("=" * 70);
+            print("");
+            continue;
+          } else {
+            // Aqui o valor é válido
+            break;
+          }
+        }
+
+        produto_alterando = carrinho.removeAt(id - 1);
+
+        print(
+          "ID: ${id} Produto: ${produto_alterando["nome"]} Preço: ${produto_alterando["preco"]} Quantidade: ${produto_alterando["quantidade"]} Subtotal: ${produto_alterando["subtotal"]}",
+        );
+        print("");
+        print("=" * 70);
+        print("");
+
+        // Looping de entrada da nova quantidade:
+        while (true) {
+          // Entrada em si:
+          stdout.write(
+            "Digite a nova quantidade do produto ${produto_alterando["nome"]}: ",
           );
+          nova_quantidade = int.tryParse(stdin.readLineSync() ?? "");
           print("");
-          print("-" * 70);
+          print("=" * 70);
           print("");
-        });
+
+          // Validação de valores inválidos (Strings):
+          if (nova_quantidade == null) {
+            print("Por favor digite um número inteiro como quantidade!");
+            stdout.write("Pressione enter para continuar...");
+            stdin.readLineSync();
+            print("");
+            print("=" * 70);
+            print("");
+            continue;
+          }
+
+          // Validação de valores negativos e zero:
+          if (nova_quantidade == 0 || nova_quantidade.isNegative) {
+            print(
+              "Por favor digite uma quantidade positivo diferente de zero!",
+            );
+            stdout.write("Pressione enter para continuar...");
+            stdin.readLineSync();
+            print("");
+            print("=" * 70);
+            print("");
+            continue;
+          } else {
+            // Aqui o valor é válido
+            break;
+          }
+        }
+
+        produto_alterando.update("quantidade", (quantidade) => nova_quantidade);
+
+        carrinho.insert(id-1, produto_alterando);
       }
     } else {
       print("Por favor digite um valor válido como opção!");
