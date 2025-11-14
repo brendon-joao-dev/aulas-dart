@@ -317,6 +317,65 @@ void main() {
         print("=" * 70);
         print("");
 
+        // Looping de entrada do novo nome:
+        while (true) {
+          // Entrada em si:
+          stdout.write("Digite o nome do produto: ");
+          nome = stdin.readLineSync() ?? "";
+          print("");
+          print("=" * 70);
+          print("");
+
+          // Validação de valores vazios:
+          if (nome.trim().isEmpty) {
+            print("Por favor digite algo como nome do produto!");
+            stdout.write("Pressione enter para continuar...");
+            stdin.readLineSync();
+            print("");
+            print("=" * 70);
+            print("");
+            continue;
+          } else {
+            // Aqui o valor é válido
+            break;
+          }
+        }
+
+        // Looping de entrada do novo preco:
+        while (true) {
+          // Entrada em si:
+          stdout.write("Digite o preço do produto: ");
+          preco = double.tryParse(stdin.readLineSync() ?? "");
+          print("");
+          print("=" * 70);
+          print("");
+
+          // Validação de valores inválidos (Strings):
+          if (preco == null) {
+            print("Por favor digite um número decimal como preço!");
+            stdout.write("Pressione enter para continuar...");
+            stdin.readLineSync();
+            print("");
+            print("=" * 70);
+            print("");
+            continue;
+          }
+
+          // Validação de valores negativos e zero:
+          if (preco == 0 || preco.isNegative) {
+            print("Por favor digite um preço positivo diferente de zero!");
+            stdout.write("Pressione enter para continuar...");
+            stdin.readLineSync();
+            print("");
+            print("=" * 70);
+            print("");
+            continue;
+          } else {
+            // Aqui o valor é válido
+            break;
+          }
+        }
+
         // Looping de entrada da nova quantidade:
         while (true) {
           // Entrada em si:
@@ -358,7 +417,17 @@ void main() {
 
         produto_alterando.update("quantidade", (quantidade) => nova_quantidade);
 
-        carrinho.insert(id-1, produto_alterando);
+        produto_alterando.update(
+          "subtotal",
+          (subtotal) => produto_alterando["preco"] * nova_quantidade,
+        );
+
+        carrinho.insert(id - 1, produto_alterando);
+
+        print("Produto alterado com sucesso!");
+        print("");
+        print("=" * 70);
+        print("");
       }
     } else {
       print("Por favor digite um valor válido como opção!");
