@@ -469,6 +469,133 @@ void main() {
             break;
           }
         }
+      } else if (opcao == 4) {
+        print("Remoção de produtos");
+        print("");
+        print("=" * 70);
+        // Looping para permitir remoção de multiplos produtos:
+        while (true) {
+          int? id = 0;
+          List<Map<String, dynamic>> produto_removendo;
+
+          // Looping de entrada do ID:
+          while (true) {
+            // Exibindo produtos do carrinho pro usuário escolher qual remover:
+            if (carrinho.length != 0) {
+              int i = 0;
+              carrinho.forEach((produto) {
+                print("");
+                print(
+                  "ID: ${i + 1} Produto: ${produto["nome"]} Preço: ${produto["preco"]} Quantidade: ${produto["quantidade"]} Subtotal: ${produto["subtotal"]}",
+                );
+                print("");
+                print("=" * 70);
+                print("");
+                i++;
+              });
+
+              // Entrada em si:
+              stdout.write("Digite o ID do produto que quer alterar: ");
+              id = int.tryParse(stdin.readLineSync() ?? "");
+              print("");
+              print("=" * 70);
+              print("");
+
+              // Validação de valores inválidos (Strings):
+              if (id == null) {
+                print("Por favor digite um número inteiro como ID!");
+                stdout.write("Pressione enter para continuar...");
+                stdin.readLineSync();
+                print("");
+                print("=" * 70);
+                print("");
+                continue;
+              }
+
+              // Validação de valores negativos e zero:
+              if (id == 0 || id.isNegative) {
+                print("Por favor digite um ID positivo diferente de zero!");
+                stdout.write("Pressione enter para continuar...");
+                stdin.readLineSync();
+                print("");
+                print("=" * 70);
+                print("");
+                continue;
+              }
+
+              // Validação de IDs fora do intervalo de produtos do carrinho:
+              if (id > carrinho.length + 1) {
+                print(
+                  "Por favor digite um ID dentro do intervalo dos produtos!",
+                );
+                stdout.write("Pressione enter para continuar...");
+                stdin.readLineSync();
+                print("");
+                print("=" * 70);
+                print("");
+                continue;
+              } else {
+                // Aqui o valor é válido
+                break;
+              }
+            } else {
+              print("");
+              print("Nenhum produto no carrinho!");
+              stdout.write("Pressione enter para continuar...");
+              stdin.readLineSync();
+              print("");
+              break;
+            }
+          }
+
+          if (id != 0 && id != null) {
+            produto_removendo = carrinho.sublist(id - 1, id);
+
+            print(
+              "ID: ${id} Produto: ${produto_removendo[0]["nome"]} Preço: ${produto_removendo[0]["preco"]} Quantidade: ${produto_removendo[0]["quantidade"]} Subtotal: ${produto_removendo[0]["subtotal"]}",
+            );
+            print("");
+            print("=" * 70);
+            print("");
+
+            // Pedindo pro usuário confirmar se tem certeza do produto que está removendo:
+            stdout.write("Deseja mesmo remover este produto? (s/n): ");
+            String confirmacao = stdin.readLineSync() ?? "";
+            print("");
+
+            if (confirmacao.toLowerCase().trim() == "s") {
+              carrinho.removeAt(id - 1);
+              print(
+                "Produto ${produto_removendo[0]["nome"]} removido com sucesso!",
+              );
+              print("");
+            } else {
+              print("Nenhum produto removido!");
+              print("");
+              break;
+            }
+          } else {
+            print(
+              "Por favor adicione produtos ao carrinho para poder remove-los",
+            );
+            print("");
+          }
+
+          // Dando ao usuário a opção de remover outro produto:
+          stdout.write("Deseja remover outro produto? (s/n): ");
+          String continuar = stdin.readLineSync() ?? "";
+          print("");
+
+          if (continuar.toLowerCase().trim() == "s") {
+            print("=" * 70);
+            print("");
+            // Repete o looping de remoção de produto
+            continue;
+          } else {
+            // Quebra o looping de remoção de produto, voltando ao menu
+            break;
+          }
+        }
       }
     } else {
       print("Por favor digite um valor válido como opção!");
