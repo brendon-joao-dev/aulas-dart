@@ -16,16 +16,18 @@
 // calculem a média de preços dos produtos e identifiquem o item mais caro do carrinho, reforçando o domínio da estrutura Map.
 
 // Requisitos funcionais:
-// RF[001] Criação - Criar Maps dentro de uma lista com a estrutura List<Map<String, dynamic>>
-// RF[002] Leitura - Exibir todos os itens do carinho
-// RF[003] Alteração - Alterar a quantidade de um produto existente pelo seu nome
-// RF[004] Excluir - Remover produtos do carrinho por seus nomes
-// RF[005] Cálculo de subtotal - Calcular quanto aquele produto está custando, multiplicando seu preço por sua quantidade 
-// RF[006] Cálculo de total - Somar todos os subtotais para ter o total do carrinho
-// RF[007] Contar unidades - Exibir a quantidade total de produtos do carrinho (interessante exibir por produto também)
-// RF[008] Cálculo de média - Calcular a média do preço dos produtos no carrinho (talvez também a média dos subtotais)
-// RF[009] Identificar o mais caro - Identificar o item mais caro do carrinho (talvez ordenar o carrinho) 
+// RF[001] Criação - Criar Maps dentro de uma lista com a estrutura List<Map<String, dynamic>> - Feito
+// RF[002] Leitura - Exibir todos os itens do carinho - Feito
+// RF[003] Alteração - Alterar a quantidade de um produto existente pelo seu nome - Feito
+// RF[004] Excluir - Remover produtos do carrinho por seus nomes - Feito
+// RF[005] Cálculo de subtotal - Calcular quanto aquele produto está custando, multiplicando seu preço por sua quantidade - Feito
+// RF[006] Cálculo de total - Somar todos os subtotais para ter o total do carrinho - Feito
+// RF[007] Contar unidades - Exibir a quantidade total de produtos do carrinho (interessante exibir por produto também) - Feito
+// RF[008] Cálculo de média - Calcular a média do preço dos produtos no carrinho (talvez também a média dos subtotais) - Feito
+// RF[009] Identificar o mais caro - Identificar o item mais caro do carrinho (talvez ordenar o carrinho) - Feito
 
 // Requisitos não funcionais:
-// RNF[001] Manter sistema - O sistema deve continuar executando até que o usuário opte por sair
-// RNF[001] Validar e repetir entradas - Validar todas as entradas, pedindo novos valores caso o usuário insira um inválido
+// RNF[001] Manter sistema - O sistema deve continuar executando até que o usuário opte por sair - Feito
+// RNF[001] Validar e repetir entradas - Validar todas as entradas, pedindo novos valores caso o usuário insira um inválido - Feito
+
+// Possível melhoria: Permitir q o usuário mantenha o valor anterior ao modificar
