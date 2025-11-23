@@ -25,6 +25,7 @@ void main() {
     print("2 - Visualizar carrinho");
     print("3 - Modificar produtos");
     print("4 - Remover produtos");
+    print("5 - Comprar produtos");
     print("");
     print("=" * 70);
     print("");
@@ -595,6 +596,106 @@ void main() {
             // Quebra o looping de remoção de produto, voltando ao menu
             break;
           }
+        }
+      } else if (opcao == 5) {
+        print("Compra de produtos");
+        print("");
+        print("=" * 70);
+
+        int total_unidades = 0;
+        int total_itens = 0;
+        double valor_total = 0;
+        double media_precos_simples = 0;
+        double media_precos_ponderada = 0;
+        Map<String, dynamic> produto_mais_caro;
+        dynamic processamento;
+
+        if (carrinho.length != 0) {
+          // Exibe todos os produtos do carrinho
+          int i = 0;
+          carrinho.forEach((produto) {
+            print("");
+            print(
+              "ID: ${i + 1} Produto: ${produto["nome"]} Preço: ${produto["preco"]} Quantidade: ${produto["quantidade"]} Subtotal: ${produto["subtotal"]}",
+            );
+            print("");
+            print("-" * 70);
+            i++;
+          });
+
+          // Total de unidades:
+          // Filtra somente as quantidades de todos os produtos
+          processamento = carrinho
+              .map((produto) => produto["quantidade"])
+              .toList();
+          // Soma todas as quantidades em uma quantidade geral
+          total_unidades = processamento.reduce(
+            (acumulador, quantidade) => acumulador += quantidade,
+          );
+
+          // Total de itens:
+          // Cálcula o total de itens diferentes no carrinho (adiciona um pois a lista começa no índice 0)
+          total_itens = carrinho.length;
+
+          // Valor total:
+          // Filtra somente os subtotais de todos os produtos
+          processamento = carrinho
+              .map((produto) => produto["subtotal"])
+              .toList();
+          // Soma todos os subtotais em um total geral
+          valor_total = processamento.reduce(
+            (acumulador, subtotal) => acumulador += subtotal,
+          );
+
+          // Média simples:
+          // Filtra somente os preços de todos os produtos
+          processamento = carrinho.map((produto) => produto["preco"]).toList();
+          // Soma todos os preços
+          processamento = processamento.reduce(
+            (acumulador, preco) => acumulador += preco,
+          );
+          media_precos_simples = processamento / total_itens;
+
+          // Média ponderada:
+          // Cálcula a média dos preços com base na divisão do valor_total (soma dos subtotais) por total_unidades (número de unidades no carrinho)
+          media_precos_ponderada = valor_total / total_unidades;
+
+          // Produto mais caro:
+          // Reduz carrinho a um elemento comparando o preço de um elemento com o próximo
+          produto_mais_caro = carrinho.reduce(
+            (maior, atual) =>
+                (maior["preco"] >= atual["preco"]) ? maior : atual,
+          );
+
+          print("");
+          print("Informações da compra:");
+          print("");
+          print("Número de unidades de produtos: $total_unidades");
+          print("Número de produtos diferentes: $total_itens");
+          print("Valor total: $valor_total");
+          print("");
+          print("Curiosidades: ");
+          print("");
+          print(
+            "O produto mais caro é ${produto_mais_caro["nome"]} custando ${produto_mais_caro["preco"]} por unidade",
+          );
+          print("A média dos preços dos produtos é: $media_precos_simples");
+          print(
+            "A média dos subtotais dos produtos é: $media_precos_ponderada",
+          );
+          print("");
+
+          stdout.write("Pressione enter para continuar...");
+          stdin.readLineSync();
+          print("");
+          continue;
+        } else {
+          print("");
+          print("Nenhum produto no carrinho!");
+          stdout.write("Pressione enter para continuar...");
+          stdin.readLineSync();
+          print("");
+          continue;
         }
       }
     } else {
