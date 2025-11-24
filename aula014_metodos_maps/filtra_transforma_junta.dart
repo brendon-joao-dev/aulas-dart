@@ -49,10 +49,8 @@ void main() {
   String nomeAdultos = pessoas.entries
       // Filtra: apenas maiores de idade -> Bruno, Caral, Diego
       .where((entrada) => entrada.value >= 18)
-
       // Transforma: nomes em maiúsculas -> BRUNO, CARLA, DIEGO
       .map((entrada) => entrada.key.toUpperCase())
-
       // Reduz: concatena os nomes -> "BRUNO, CARLA, DIEGO"
       .reduce((acumulador, nome) => "$acumulador, $nome");
 
