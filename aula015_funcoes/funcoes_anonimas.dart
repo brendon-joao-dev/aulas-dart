@@ -29,7 +29,7 @@ void main() {
 
   // .isOdd é uma propriedade fornecida pela classe int em Dart
   // que retorna true se o número for ímpar e false se for par.
-  var novaLista2 = lista
+  var novaLista2 = lista2
       .where((numero) {
         return numero.isOdd;
       }) // Busca
