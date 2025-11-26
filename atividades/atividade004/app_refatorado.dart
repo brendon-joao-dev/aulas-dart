@@ -719,8 +719,8 @@ void decoracao() {
 
 // entradaString
 String entradaString({
-  required String mensagemEntrada = "Entre com um valor: ",
-  required String mensagemInvalida = "Por favor entre com algum valor!",
+  String mensagemEntrada = "Entre com um valor: ",
+  String mensagemInvalida = "Por favor entre com algum valor!",
 }) {
   while (true) {
     // Entrada em si:
@@ -741,7 +741,7 @@ String entradaString({
       continue;
     } else {
       // Aqui o valor é válido
-      break;
+      return entrada;
     }
   }
 }
