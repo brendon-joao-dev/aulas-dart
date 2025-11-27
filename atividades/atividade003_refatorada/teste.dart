@@ -6,6 +6,7 @@ List<T> entradaIntervalo<T>({int quantidade_itens = 0, String elementoDesejado =
   bool todosValidos = true;
 
   while (true) {
+    todosValidos = true;
     stdout.write("Digite uma sequência de ${elementoDesejado} separados por espaço: ");
     String? entrada = stdin.readLineSync();
     print("");
@@ -20,13 +21,13 @@ List<T> entradaIntervalo<T>({int quantidade_itens = 0, String elementoDesejado =
 
     intervaloValidando = entradas.map((item) {
       if (T == int) {
-        return int.tryParse(item); 
+        return int.tryParse(item) as T?;
       }
       if (T == double) {
-        int.tryParse(item) ?? null;
+        return double.tryParse(item) as T?;
       }
       if (T == String) {
-        return;
+        return item as T?;
       }
     }).toList();
 
