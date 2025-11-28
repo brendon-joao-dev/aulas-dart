@@ -32,9 +32,6 @@ List<T> entradaIntervalo<T>({int quantidade_itens = 0, String elementoDesejado =
       }
     }).toList();
 
-    print(entradas);
-    print(intervaloValidando);
-
     if (quantidade_itens != 0) {
       if (quantidade_itens != intervaloValidando.length) {
         print("Por favor digite ${quantidade_itens} ${elementoDesejado}!");
@@ -80,9 +77,9 @@ List filtraModifica({required List lista, required Function filtro, required Fun
   return modificada;
 }
 
-num filtraSoma({required List lista, required Function filtro}) {
-  List filtrada = lista.where((elemento) => filtro(elemento)).toList();
-  num valorUnico = filtrada.reduce((soma, numero) => soma += numero);
+int filtraSoma({required List<int> lista, required Function filtro}) {
+  List<int> filtrada = lista.where((elemento) => filtro(elemento)).toList();
+  int valorUnico = filtrada.reduce((soma, numero) => soma += numero);
   return valorUnico;
 }
 
@@ -95,4 +92,26 @@ List<String> filtraPalavras({required List<String> listaPalavras, required Strin
 double maxList({required List<double> listaNumeros}) {
   double maior = listaNumeros.reduce(max);
   return maior;
+}
+
+bool continuarPrograma() {
+  String continuar = "";
+  while (true) {
+    stdout.write("Deseja executar o programa novamente? (s/n): ");
+    continuar = stdin.readLineSync()!.toLowerCase().trim();
+    print("");
+
+    if (continuar == "s") {
+      return true;
+    } else if (continuar == "n") {
+      return false;
+    } else {
+      print("Por favor digite 's' para sim ou 'n' para não!\n");
+      continue;
+    }
+  }
+}
+
+void exibirIntervalo(intervalo) {
+  intervalo.forEach((elemento) => stdout.write("$elemento, "));
 }
