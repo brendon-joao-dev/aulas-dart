@@ -99,7 +99,7 @@ void main() {
     print("<=====>" * 7);
     if (continuar == "s") {
       // Reinicia o programa
-      continue; 
+      continue;
     } else {
       // Saí do programa
       break;
