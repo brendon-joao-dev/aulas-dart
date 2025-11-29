@@ -1,14 +1,19 @@
 import "dart:io";
 import "dart:math";
 
-List<T> entradaIntervalo<T>({int quantidade_itens = 0, String elementoDesejado = "números inteiros"}) {
+List<T> entradaIntervalo<T>({
+  int quantidade_itens = 0,
+  String elementoDesejado = "números inteiros",
+}) {
   List<String> entradas;
   List<T?> intervaloValidando;
   bool todosValidos = true;
 
   while (true) {
     todosValidos = true;
-    stdout.write("Digite uma sequência de ${elementoDesejado} separados por espaço: ");
+    stdout.write(
+      "Digite uma sequência de ${elementoDesejado} separados por espaço: ",
+    );
     String? entrada = stdin.readLineSync();
     print("");
 
@@ -22,7 +27,7 @@ List<T> entradaIntervalo<T>({int quantidade_itens = 0, String elementoDesejado =
 
     intervaloValidando = entradas.map((item) {
       if (T == int) {
-        return int.tryParse(item) as T?; 
+        return int.tryParse(item) as T?;
       }
       if (T == double) {
         return double.tryParse(item) as T?;
@@ -42,7 +47,7 @@ List<T> entradaIntervalo<T>({int quantidade_itens = 0, String elementoDesejado =
 
     for (int i = 0; i < intervaloValidando.length; i++) {
       if (intervaloValidando[i] == null) {
-        print("O ${i+1}° número digitado é inválido!");
+        print("O ${i + 1}° número digitado é inválido!");
         print("");
         todosValidos = false;
         break;
@@ -58,40 +63,8 @@ List<T> entradaIntervalo<T>({int quantidade_itens = 0, String elementoDesejado =
   }
 }
 
-List eliminarDuplicatas({required List listaComDuplicatas}) {
-  Set setUnicos = listaComDuplicatas.toSet();
-  List listaUnicos = setUnicos.toList();
-  listaUnicos.sort();
-  return listaUnicos;
-}
-
-double calcularMedia({required List<double> notas}) {
-  double soma = notas.reduce((somadas, nota) => somadas += nota);
-  double media = soma / notas.length;
-  return media;
-}
-
-List filtraModifica({required List lista, required Function filtro, required Function modificacao}) {
-  List filtrada = lista.where((elemento) => filtro(elemento)).toList();
-  List modificada = filtrada.map((elemento) => modificacao(elemento)).toList();
-  return modificada;
-}
-
-int filtraSoma({required List<int> lista, required Function filtro}) {
-  List<int> filtrada = lista.where((elemento) => filtro(elemento)).toList();
-  int valorUnico = filtrada.reduce((soma, numero) => soma += numero);
-  return valorUnico;
-}
-
-
-List<String> filtraPalavras({required List<String> listaPalavras, required String letraIncial, required int numeroCaracteres}) {
-  List<String> palavras_filtradas = listaPalavras.where((palavra) => palavra.length >= numeroCaracteres && palavra[0].toLowerCase() == letraIncial.toLowerCase()).toList();
-  return palavras_filtradas;
-}
-
-double maxList({required List<double> listaNumeros}) {
-  double maior = listaNumeros.reduce(max);
-  return maior;
+void exibirIntervalo(intervalo) {
+  intervalo.forEach((elemento) => stdout.write("$elemento, "));
 }
 
 bool continuarPrograma() {
@@ -112,6 +85,47 @@ bool continuarPrograma() {
   }
 }
 
-void exibirIntervalo(intervalo) {
-  intervalo.forEach((elemento) => stdout.write("$elemento, "));
+int filtraSoma({required List<int> lista, required Function filtro}) {
+  List<int> filtrada = lista.where((elemento) => filtro(elemento)).toList();
+  int valorUnico = filtrada.reduce((soma, numero) => soma += numero);
+  return valorUnico;
+}
+
+List<T> eliminarDuplicatas<T>({required List<T> listaComDuplicatas}) {
+  Set<T> setUnicos = listaComDuplicatas.toSet();
+  List<T> listaUnicos = setUnicos.toList();
+  listaUnicos.sort();
+  return listaUnicos;
+}
+
+double calcularMedia({required List<double> elementos}) {
+  double soma = elementos.reduce((somadas, elemento) => somadas += elemento);
+  double media = soma / elementos.length;
+  return media;
+}
+
+List<T> filtraModifica<T>({required List<T> lista, required Function filtro, required Function modificacao}) {
+  List<T> filtrada = lista.where((elemento) => filtro(elemento)).toList();
+  List<T> modificada = filtrada.map((elemento) => modificacao(elemento)).toList();
+  return modificada;
+}
+
+List<String> filtraPalavras({
+  required List<String> listaPalavras,
+  required String letraIncial,
+  required int numeroCaracteres,
+}) {
+  List<String> palavras_filtradas = listaPalavras
+      .where(
+        (palavra) =>
+            palavra.length >= numeroCaracteres &&
+            palavra[0].toLowerCase() == letraIncial.toLowerCase(),
+      )
+      .toList();
+  return palavras_filtradas;
+}
+
+double maxList({required List<double> listaNumeros}) {
+  double maior = listaNumeros.reduce(max);
+  return maior;
 }
