@@ -98,12 +98,6 @@ void exibirIntervalo(intervalo) {
   intervalo.forEach((elemento) => stdout.write("$elemento, "));
 }
 
-int filtraSoma({required List<int> lista, required Function filtro}) {
-  List<int> filtrada = lista.where((elemento) => filtro(elemento)).toList();
-  int valorUnico = filtrada.reduce((soma, numero) => soma += numero);
-  return valorUnico;
-}
-
 bool continuarPrograma() {
   String continuar = "";
   while (true) {
@@ -120,4 +114,10 @@ bool continuarPrograma() {
       continue;
     }
   }
+}
+
+int filtraSoma({required List<int> lista, required Function filtro}) {
+  List<int> filtrada = lista.where((elemento) => filtro(elemento)).toList();
+  int valorUnico = filtrada.reduce((soma, numero) => soma += numero);
+  return valorUnico;
 }
