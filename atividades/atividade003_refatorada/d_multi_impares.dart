@@ -12,11 +12,20 @@ void main() {
 
   while (true) {
     List<int> numeros = [];
-    List<int> imparesMultiplicados = [];
+    List<dynamic> imparesMultiplicados = [];
 
     numeros = entradaIntervalo<int>();
 
-    imparesMultiplicados = filtraModifica<int>(lista: numeros, filtro: (elemento) => elemento % 2 != 0, modificacao: (elemento) => elemento * 2);
+    imparesMultiplicados = filtraModifica(lista: numeros, filtro: (elemento) => elemento % 2 != 0, modificacao: (elemento) => elemento * 2);
+
+    print("A lista original é: ");
+    exibirIntervalo(numeros);
+    print("");
+    print("");
+    print("A lista de números ímpares dobrados é: ");
+    exibirIntervalo(imparesMultiplicados);
+    print("");
+    print("");
 
     if (continuarPrograma()) {
       continue;
@@ -107,8 +116,8 @@ bool continuarPrograma() {
 }
 
 
-List<T> filtraModifica<T>({required List<T> lista, required Function filtro, required Function modificacao}) {
-  List<T> filtrada = lista.where((elemento) => filtro(elemento)).toList();
-  List<T> modificada = filtrada.map((elemento) => modificacao(elemento)).toList();
+List filtraModifica({required List lista, required Function filtro, required Function modificacao}) {
+  List filtrada = lista.where((elemento) => filtro(elemento)).toList();
+  List modificada = filtrada.map((elemento) => modificacao(elemento)).toList();
   return modificada;
 }
