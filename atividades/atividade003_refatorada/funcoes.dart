@@ -4,12 +4,13 @@ import "dart:math";
 // Função usando Generics (<T>) para se comportar de acordo com o tipo passado:
 List<T> entradaIntervalo<T>({
   int quantidade_itens = 0, // Número de itens que a função deve retornar
-  String elementoDesejado = "números inteiros", // Mensagem de elemento que deve ser inserido pelo usuário
+  String elementoDesejado =
+      "números inteiros", // Mensagem de elemento que deve ser inserido pelo usuário
 }) {
   // Declaração de variáveis
   List<String> entradas;
   List<T?> intervaloValidando; // Lista do tipo passado
-  bool todosValidos = true; 
+  bool todosValidos = true;
 
   // Looping pra validação:
   while (true) {
@@ -131,7 +132,7 @@ double calcularMedia({required List<double> elementos}) {
 // retornando a lista resultante:
 List filtraModifica({
   required List lista,
-  required Function filtro, 
+  required Function filtro,
   required Function modificacao,
 }) {
   // Filtra a lista
