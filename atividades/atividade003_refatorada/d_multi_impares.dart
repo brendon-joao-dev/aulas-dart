@@ -16,7 +16,11 @@ void main() {
 
     numeros = entradaIntervalo<int>();
 
-    imparesMultiplicados = filtraModifica(lista: numeros, filtro: (elemento) => elemento % 2 != 0, modificacao: (elemento) => elemento * 2);
+    imparesMultiplicados = filtraModifica(
+      lista: numeros,
+      filtro: (elemento) => elemento % 2 != 0,
+      modificacao: (elemento) => elemento * 2,
+    );
 
     print("A lista original é: ");
     exibirIntervalo(numeros);
@@ -36,14 +40,19 @@ void main() {
   print("<=====>" * 7);
 }
 
-List<T> entradaIntervalo<T>({int quantidade_itens = 0, String elementoDesejado = "números inteiros"}) {
+List<T> entradaIntervalo<T>({
+  int quantidade_itens = 0,
+  String elementoDesejado = "números inteiros",
+}) {
   List<String> entradas;
   List<T?> intervaloValidando;
   bool todosValidos = true;
 
   while (true) {
     todosValidos = true;
-    stdout.write("Digite uma sequência de ${elementoDesejado} separados por espaço: ");
+    stdout.write(
+      "Digite uma sequência de ${elementoDesejado} separados por espaço: ",
+    );
     String? entrada = stdin.readLineSync();
     print("");
 
@@ -57,7 +66,7 @@ List<T> entradaIntervalo<T>({int quantidade_itens = 0, String elementoDesejado =
 
     intervaloValidando = entradas.map((item) {
       if (T == int) {
-        return int.tryParse(item) as T?; 
+        return int.tryParse(item) as T?;
       }
       if (T == double) {
         return double.tryParse(item) as T?;
@@ -77,7 +86,7 @@ List<T> entradaIntervalo<T>({int quantidade_itens = 0, String elementoDesejado =
 
     for (int i = 0; i < intervaloValidando.length; i++) {
       if (intervaloValidando[i] == null) {
-        print("O ${i+1}° número digitado é inválido!");
+        print("O ${i + 1}° número digitado é inválido!");
         print("");
         todosValidos = false;
         break;
@@ -115,8 +124,11 @@ bool continuarPrograma() {
   }
 }
 
-
-List filtraModifica({required List lista, required Function filtro, required Function modificacao}) {
+List filtraModifica({
+  required List lista,
+  required Function filtro,
+  required Function modificacao,
+}) {
   List filtrada = lista.where((elemento) => filtro(elemento)).toList();
   List modificada = filtrada.map((elemento) => modificacao(elemento)).toList();
   return modificada;
