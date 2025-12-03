@@ -496,7 +496,7 @@ void main() {
               });
 
               // Entrada em si:
-              stdout.write("Digite o ID do produto que quer alterar: ");
+              stdout.write("Digite o ID do produto que quer remover: ");
               id = int.tryParse(stdin.readLineSync() ?? "");
               print("");
               print("=" * 70);
