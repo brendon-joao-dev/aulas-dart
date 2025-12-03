@@ -22,6 +22,24 @@ void pressioneContinuar() {
   decoracao();
 }
 
+bool perguntaContinuar(mensagem) {
+  String continuar = "";
+  while (true) {
+    stdout.write(mensagem);
+    continuar = stdin.readLineSync()!.toLowerCase().trim();
+    print("");
+
+    if (continuar == "s") {
+      return true;
+    } else if (continuar == "n") {
+      return false;
+    } else {
+      print("Por favor digite 's' para sim ou 'n' para não!\n");
+      continue;
+    }
+  }
+}
+
 T entrada<T>({
   String mensagemEntrada = "Entre com um valor: ",
   String mensagemInvalida = "Por favor entre com algum valor!",
@@ -89,11 +107,13 @@ T entrada<T>({
 }
 
 bool cadastrarProduto({
-  List<Map<String, dynamic>> carrinho = [],
+  List<Map<String, dynamic>>? carrinho,
   String nome = "",
   double preco = 0.0,
   int quantidade = 0,
 }) {
+  carrinho = carrinho ?? [];
+
   // Verifica se o produto existe no carrinho:
   if (carrinho.where((produto) => produto["nome"] == nome).toList().length ==
       0) {
@@ -106,6 +126,8 @@ bool cadastrarProduto({
       "subtotal": subtotal,
     };
 
+    carrinho.add(produto);
+
     print("Produto $nome adicionado com sucesso!");
     decoracao();
     return true;
@@ -116,7 +138,193 @@ bool cadastrarProduto({
   }
 }
 
-// exibirCarrinho
-// modificarProduto
-// removerProduto
-// resumoCarrinho
+void exibirCarrinho({List<Map<String, dynamic>>? carrinho}) {
+  carrinho = carrinho ?? [];
+
+  if (carrinho.length != 0) {
+    int i = 0;
+    carrinho.forEach((produto) {
+      print("");
+      print(
+        "ID: ${i + 1} Produto: ${produto["nome"]} Preço: ${produto["preco"]} Quantidade: ${produto["quantidade"]} Subtotal: ${produto["subtotal"]}",
+      );
+      print("");
+      print("-" * 70);
+      i++;
+    });
+
+    pressioneContinuar();
+  } else {
+    print("");
+    print("Nenhum produto no carrinho!");
+    pressioneContinuar();
+  }
+}
+
+bool modificarProduto({
+  List<Map<String, dynamic>>? carrinho ,
+  int id = 0,
+  String? novoNome,
+  double? novoPreco,
+  int? novaQuantidade,
+}) {
+  carrinho = carrinho ?? [];
+
+  if (carrinho.length != 0) {
+    Map<String, dynamic> produtoAlterando = carrinho.removeAt(id - 1);
+
+    novoNome = novoNome ?? produtoAlterando["nome"];
+
+    novoPreco = novoPreco ?? produtoAlterando["preco"];
+
+    novaQuantidade = novaQuantidade ?? produtoAlterando["quantidade"];
+
+    produtoAlterando.update("nome", (nome) => novoNome);
+
+    produtoAlterando.update("preco", (preco) => novoPreco);
+
+    produtoAlterando.update("quantidade", (quantidade) => novaQuantidade);
+
+    produtoAlterando.update(
+      "subtotal",
+      (subtotal) => produtoAlterando["preco"] * novaQuantidade,
+    );
+
+    carrinho.insert(id - 1, produtoAlterando);
+
+    print("Produto alterado com sucesso!");
+    decoracao();
+    return true;
+  } else {
+    print("Por favor adicione produtos ao carrinho para poder modifica-los");
+    print("");
+    return false;
+  }
+}
+
+bool removerProduto({List<Map<String, dynamic>>? carrinho, int id = 0}) {
+  carrinho = carrinho ?? [];
+
+  if (carrinho.length != 0) {
+    List<Map<String, dynamic>> produtoRemovendo = carrinho.sublist(id - 1, id);
+
+    print(
+      "ID: ${id} Produto: ${produtoRemovendo[0]["nome"]} Preço: ${produtoRemovendo[0]["preco"]} Quantidade: ${produtoRemovendo[0]["quantidade"]} Subtotal: ${produtoRemovendo[0]["subtotal"]}",
+    );
+    decoracao();
+
+    bool confirmacao = perguntaContinuar(
+      "Deseja mesmo remover este produto? (s/n): ",
+    );
+
+    if (confirmacao) {
+      carrinho.removeAt(id - 1);
+      print("Produto ${produtoRemovendo[0]["nome"]} removido com sucesso!");
+      print("");
+      return true;
+    } else {
+      print("Nenhum produto removido!");
+      print("");
+      return false;
+    }
+  } else {
+    print("Por favor adicione produtos ao carrinho para poder remove-los");
+    print("");
+    return false;
+  }
+}
+
+Map<String, dynamic> resumirCarrinho({
+  List<Map<String, dynamic>>? carrinho,
+}) {
+  carrinho = carrinho ?? [];
+  int totalUnidades = 0;
+  int totalItens = 0;
+  double valorTotal = 0;
+  double mediaPrecosSimples = 0;
+  double mediaPrecosPonderada = 0;
+  Map<String, dynamic> produtoMaisCaro = {};
+  dynamic processamento;
+
+  if (carrinho.length != 0) {
+    // Total de unidades:
+    // Filtra somente as quantidades de todos os produtos
+    processamento = carrinho.map((produto) => produto["quantidade"]).toList();
+    // Soma todas as quantidades em uma quantidade geral
+    totalUnidades = processamento.reduce(
+      (acumulador, quantidade) => acumulador += quantidade,
+    );
+
+    // Total de itens:
+    // Cálcula o total de itens diferentes no carrinho (adiciona um pois a lista começa no índice 0)
+    totalItens = carrinho.length;
+
+    // Valor total:
+    // Filtra somente os subtotais de todos os produtos
+    processamento = carrinho.map((produto) => produto["subtotal"]).toList();
+    // Soma todos os subtotais em um total geral
+    valorTotal = processamento.reduce(
+      (acumulador, subtotal) => acumulador += subtotal,
+    );
+
+    // Média simples:
+    // Filtra somente os preços de todos os produtos
+    processamento = carrinho.map((produto) => produto["preco"]).toList();
+    // Soma todos os preços
+    processamento = processamento.reduce(
+      (acumulador, preco) => acumulador += preco,
+    );
+    mediaPrecosSimples = processamento / totalItens;
+
+    // Média ponderada:
+    // Cálcula a média dos preços com base na divisão do valor_total (soma dos subtotais) por total_unidades (número de unidades no carrinho)
+    mediaPrecosPonderada = valorTotal / totalUnidades;
+
+    // Produto mais caro:
+    // Reduz carrinho a um elemento comparando o preço de um elemento com o próximo
+    produtoMaisCaro = carrinho.reduce(
+      (maior, atual) => (maior["preco"] >= atual["preco"]) ? maior : atual,
+    );
+  } else {
+    print("");
+    print("Nenhum produto no carrinho!");
+    pressioneContinuar();
+  }
+  return {
+    "total-unidades": totalUnidades,
+    "total-itens": totalItens,
+    "valor-total": valorTotal,
+    "media-simples": mediaPrecosSimples,
+    "media-ponderada": mediaPrecosPonderada,
+    "produto-mais-caro": produtoMaisCaro,
+  };
+}
+
+void exibirResumoCarrinho({List<Map<String, dynamic>>? carrinho, Map<String, dynamic>? resumo}) {
+  carrinho = carrinho ?? [];
+  resumo = resumo ?? {};
+
+  if (carrinho.length != 0) {
+    print("");
+    print("Informações da compra:");
+    print("");
+    print("Número de unidades de produtos: ${resumo["total_unidades"]}");
+    print("Número de produtos diferentes: ${resumo["total_itens"]}");
+    print("Valor total: ${resumo["valor_total"]}");
+    print("");
+    print("Curiosidades: ");
+    print("");
+    print(
+      "O produto mais caro é ${resumo["produto_mais_caro"]["nome"]} custando ${resumo["produto_mais_caro"]["preco"]} por unidade",
+    );
+    print("A média dos preços dos produtos é: ${resumo["media_precos_simples"]}");
+    print("A média dos subtotais dos produtos é: ${resumo["media_precos_ponderada"]}");
+    print("");
+
+    pressioneContinuar();
+  } else {
+    print("");
+    print("Nenhum produto no carrinho!");
+    pressioneContinuar();
+  }
+}
