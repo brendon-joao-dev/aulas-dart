@@ -227,6 +227,20 @@ class Geometria {
 // Classe Datas:
 // - Atributos: int ano
 // - Métodos: calcularIdade()
+class Datas {
+  late int ano;
+  late int anoAtual;
+
+  Datas({int ano = 0, int anoAtual = 0}) {
+    this.ano = 0;
+    this.anoAtual = DateTime.now().year.toInt();
+  }
+
+  int calcularIdade() {
+    int idade = anoAtual - ano;
+    return idade;
+  }
+}
 
 // Classe Moedas:
 // - Atributos: double valorReais
