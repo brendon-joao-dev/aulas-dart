@@ -106,8 +106,90 @@ class System {
 }
 
 // Classe Calculadora:
-// - Atributos: int n1, int n2
-// - Métodos: soma(), subtracao(), multiplicacao(), divisao(), restoDivisao(), divisaoInteira(), media(), antecessorSucessor(), dobrarTriplicar(), tabuada(), verificarParImpar()
+// - Métodos: soma(), subtracao(), multiplicacao(), divisao(), restoDivisao(), divisaoInteira(), media(), antecessorSucessor(), dobrarTriplicar(), tabuada(), verificarPar(), verificarImpar()
+class Calculadora {
+  double soma({double n1 = 0, double n2 = 0}) {
+    double soma = n1 + n2;
+    return soma;
+  }
+
+  double subtracao({double n1 = 0, double n2 = 0}) {
+    double subtracao = n1 - n2;
+    return subtracao;
+  }
+
+  double multiplicacao({double n1 = 0, double n2 = 0}) {
+    double multiplicacao = n1 * n2;
+    return multiplicacao;
+  }
+
+  double divisao({double n1 = 0, double n2 = 0}) {
+    if (n2 == 0) {
+      n2 = 1;
+    }
+
+    double divisao = n1 / n2;
+    return divisao;
+  }
+
+  double restoDivisao({double n1 = 0, double n2 = 0}) {
+    if (n2 == 0) {
+      n2 = 1;
+    }
+
+    double restoDivisao = n1 % n2;
+    return restoDivisao;
+  }
+
+  double divisaoInteira({double n1 = 0, double n2 = 0}) {
+    if (n2 == 0) {
+      n2 = 1;
+    }
+
+    double divisaoInteira = (n1 ~/ n2).toDouble();
+    return divisaoInteira;
+  }
+
+  double media({required List<double> valores}) {
+    double soma = valores.reduce((soma, n) => soma += n);
+    double media = soma / 4;
+    return media;
+  }
+
+  List<int> antecessorSucessor({int numero = 0}) {
+    int antecessor = numero - 1;
+    int sucessor = numero + 1;
+    return [antecessor, sucessor];
+  }
+
+  List<double> dobrarTriplicar({double numero = 0}) {
+    double dobro = numero * 2;
+    double triplo = numero * 3;
+    return [dobro, triplo];
+  }
+
+  void tabuada({int numero = 0}) {
+    for (int i = 1; i <= 10; i++) {
+      print("$numero X $i = ${numero * i}");
+    }
+  }
+
+  bool verificarPar({int numero = 0}) {
+    if (numero % 2 == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool verificarImpar({int numero = 0}) {
+    if (numero % 2 != 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
 
 // Classe Geometria:
 // - Atributos: double medida, double lado, double base, double altura, double raio
