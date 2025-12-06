@@ -1,5 +1,6 @@
 // Importação de módulos:
 import "dart:io";
+import "dart:math";
 
 // Classe System:
 // - Atributos: bool rodando
@@ -192,8 +193,36 @@ class Calculadora {
 }
 
 // Classe Geometria:
-// - Atributos: double medida, double lado, double base, double altura, double raio
+// - Atributos: double lado, double base, double altura, double raio
 // - Métodos: areaQuadrado(), areaRetangulo(), areaTriangulo(), areaCirculo()
+class Geometria {
+  double lado;
+  double base;
+  double altura;
+  double raio;
+
+  Geometria({this.lado = 0, this.base = 0, this.altura = 0, this.raio = 0});
+
+  double areaQuadrado() {
+    double area = pow(lado, 2).toDouble();
+    return area;
+  }
+
+  double areaRetangulo() {
+    double area = base * altura;
+    return area;
+  }
+
+  double areaTriangulo() {
+    double area = (base * altura) / 2;
+    return area;
+  }
+
+  double areaCirculo() {
+    double area = pi * pow(raio, 2).toDouble();
+    return area;
+  }
+}
 
 // Classe Datas:
 // - Atributos: int ano
